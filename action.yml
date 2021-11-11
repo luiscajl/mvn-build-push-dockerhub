@@ -19,10 +19,15 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Trimm SHA
-      uses: drdeath2609/sha-trim-action@v1.1.1
+    - name: Get Time
+      id: time
+      uses: nanzm/get-time-action@v1.1
       with:
-        sha-length: 7
+        timeZone: 8
+        format: 'YYYY-MM-DD-HH-mm-ss'
+    - name: Trimm SHA
+      shell: bash
+      run: echo "TRIMMED_SHA="${{ steps.time.outputs.time }}"
     - name: Set up JDK 11
       uses: actions/setup-java@v2
       with:
